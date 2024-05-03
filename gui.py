@@ -96,13 +96,20 @@ if __name__ == '__main__':
 
             processText += '|'
             for process in ganttList:
-                processID = str(process.pid) if process.pid > 0 else '-'
-                processText += (('-'*(((process.burstTime * size)) // 2)) + \
-                                ('-'*((process.burstTime - 1) // 2)) + \
-                                processID + \
-                                ('-'*(((process.burstTime * size)) // 2)) + \
-                                ('-'*((process.burstTime - 1) // 2)) + \
-                                '|')
+                if process.pid != 0:
+                    processText += (('-'*(((process.burstTime * size)) // 2)) + \
+                                    ('-'*((process.burstTime - 1) // 2)) + \
+                                    str(process.pid) + \
+                                    ('-'*(((process.burstTime * size)) // 2)) + \
+                                    ('-'*((process.burstTime - 1) // 2)) + \
+                                    '|')
+                else:
+                    processText += ((' '*(((process.burstTime * size)) // 2)) + \
+                                    (' '*((process.burstTime - 1) // 2)) + \
+                                    ' ' + \
+                                    (' '*(((process.burstTime * size)) // 2)) + \
+                                    (' '*((process.burstTime - 1) // 2)) + \
+                                    '|')
                 print(process.toString())
 
             counter = 0
