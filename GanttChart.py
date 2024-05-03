@@ -7,6 +7,7 @@ class GanttChart:
         self.processList = processList.copy()
         self.sortByPriority()
         self.createGanttChartList()
+        self.calculateProcesses()
 
     def getGanttChartList(self) -> list[Process]:
         return self.processList
@@ -36,7 +37,7 @@ class GanttChart:
             currentTime += 1
         return idx
 
-    def createGanttChartList(self):
+    def createGanttChartList(self) -> None:
         ganttList = [self.processList.pop(self.getNextProcessIdx(0))]
         ganttList[0].startTime = ganttList[0].arrivalTime
 
@@ -78,10 +79,66 @@ class GanttChart:
         self.processList = ganttList.copy()
 
 
-    def getGanttChartString(self):
+    def getGanttChartString(self) -> str:
         ganttStr = ""
         for process in self.processList:
             ganttStr += str(str(process.pid)*process.burstTime)
 
         translateTable = str.maketrans('0', '-')
         return ganttStr.translate(translateTable)
+
+    def calculateProcesses(self) -> None:
+        for process in self.processList:
+            startProcess = Process(0,0,0,0)
+            endProcess = Process(0,0,0,0)
+            startingBurstTime = 0
+
+            for testProcess in self.processList:
+                if testProcess.pid == process.pid:
+                    startProcess = testProcess
+                    break
+
+            for testProcess in self.processList:
+                if testProcess.pid == process.pid:
+                    endProcess = testProcess
+                    startingBurstTime += testProcess.burstTime
+
+            process.turnAroundTime = endProcess.startTime + endProcess.burstTime - startProcess.arrivalTime
+            process.waitingTime = process.turnAroundTime - startingBurstTime
+            process.responseTime = startProcess.startTime - startProcess.arrivalTime
+
+    def getAverageTurnAroundTime(self) -> float:
+        doneProcessPIDs = []
+        totalProcesses = 0
+        totalTurnAroundTime = 0
+        for process in self.processList:
+            if process.pid not in doneProcessPIDs:
+                totalProcesses += 1
+                totalTurnAroundTime += process.turnAroundTime
+                doneProcessPIDs.append(process.pid)
+
+        return totalTurnAroundTime / totalProcesses
+
+    def getAverageWaitingTime(self) -> float:
+        doneProcessPIDs = []
+        totalProcesses = 0
+        totalWaitingTime = 0
+        for process in self.processList:
+            if process.pid not in doneProcessPIDs:
+                totalProcesses += 1
+                totalWaitingTime += process.waitingTime
+                doneProcessPIDs.append(process.pid)
+
+        return totalWaitingTime / totalProcesses
+
+    def getAverageResponseTime(self) -> float:
+        doneProcessPIDs = []
+        totalProcesses = 0
+        totalResponseTime = 0
+        for process in self.processList:
+            if process.pid not in doneProcessPIDs:
+                totalProcesses += 1
+                totalResponseTime += process.responseTime
+                doneProcessPIDs.append(process.pid)
+
+        return totalResponseTime / totalProcesses
