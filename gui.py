@@ -6,6 +6,8 @@ if __name__ == '__main__':
     processN = 0
 
     sg.set_options(font=('Consolas'))
+    width = 800
+    height = 300
 
     # All the stuff inside your window.
     layout = [
@@ -46,7 +48,7 @@ if __name__ == '__main__':
             column.append([sg.Button('Next', key='-processesInputNext-'), sg.Button('Cancel')])
 
             layout = [
-                [sg.Column(column, scrollable=True, vertical_scroll_only=True)]
+                [sg.Column(column, size=(width, height), scrollable=True, vertical_scroll_only=True)]
             ]
             window.close()
             window = sg.Window('Priority Preemptive', layout)
@@ -110,12 +112,16 @@ if __name__ == '__main__':
                 spaceText += ('|' + ' '*size)
                 numberLineText += (str(num) + ' '*(size - counter))
 
-            layout = [
-                [sg.Text('Gantt Chart', justification='center')],
-                [sg.Text('')],
+            column = [
                 [sg.Text(processText)],
                 [sg.Text(spaceText)],
                 [sg.Text(numberLineText)],
+            ]
+
+            layout = [
+                [sg.Text('Gantt Chart', justification='center')],
+                [sg.Text('')],
+                [sg.Column(column, size=(width, height), scrollable=True)]
             ]
 
 
