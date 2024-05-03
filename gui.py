@@ -101,6 +101,7 @@ if __name__ == '__main__':
                                 ('-'*(((process.burstTime * size)) // 2)) + \
                                 ('-'*((process.burstTime - 1) // 2)) + \
                                 '|')
+                print(process.toString())
 
             counter = 0
             for num in numbers:

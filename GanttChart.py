@@ -35,6 +35,7 @@ class GanttChart:
     def createGanttChartList(self):
         ganttList = [self.processList.pop(self.getNextProcessIdx(0))]
         ganttList[0].startTime = ganttList[0].arrivalTime
+
         if ganttList[0].arrivalTime > 0:
             ganttList.insert(0, Process(0, 0, ganttList[0].arrivalTime, 0))
             ganttList[0].startTime = 0
