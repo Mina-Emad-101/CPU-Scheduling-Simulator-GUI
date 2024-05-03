@@ -27,10 +27,14 @@ class GanttChart:
         return
 
     def getNextProcessIdx(self, currentTime: int) -> int:
-        for i, process in enumerate(self.processList):
-            if process.arrivalTime <= currentTime:
-                return i
-        return -1
+        idx = -1
+        while idx == -1 and currentTime < len(self.getGanttChartString()):
+            for i, process in enumerate(self.processList):
+                if process.arrivalTime <= currentTime:
+                    idx = i
+                    break
+            currentTime += 1
+        return idx
 
     def createGanttChartList(self):
         ganttList = [self.processList.pop(self.getNextProcessIdx(0))]
