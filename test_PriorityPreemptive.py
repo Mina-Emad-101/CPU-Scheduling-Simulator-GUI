@@ -46,6 +46,15 @@ class TestGanttChart(unittest.TestCase):
                 ],
                 "12211-----3333"
             ),
+            (
+                [
+                    Process(1, 0, 10, 3),
+                    Process(2, 1, 1, 1),
+                    Process(3, 2, 2, 4),
+                    Process(4, 3, 3, 2),
+                ],
+                "1214441111111133"
+            ),
         ]
 
         ganttChartList = [GanttChart(testTuple[0]) for testTuple in testList]

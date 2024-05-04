@@ -128,7 +128,12 @@ if __name__ == '__main__':
             layout = [
                 [sg.Text('Gantt Chart', justification='center')],
                 [sg.Text('')],
-                [sg.Column(column, size=(width, height), scrollable=True)]
+                [sg.Column(column, size=(width, height), scrollable=True)],
+                [sg.Text('')],
+                [sg.Text('')],
+                [sg.Text('Average Turn Around Time: '), sg.Text(str(ganttChart.getAverageTurnAroundTime()))],
+                [sg.Text('Average Waiting Time: '), sg.Text(str(ganttChart.getAverageWaitingTime()))],
+                [sg.Text('Average Response Time: '), sg.Text(str(ganttChart.getAverageResponseTime()))],
             ]
 
 

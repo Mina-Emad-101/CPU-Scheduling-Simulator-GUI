@@ -13,7 +13,7 @@ class Process:
         self.turnAroundTime = 0
 
     def split(self, time: int) -> Process:
-        burstTimeLeft = self.burstTime - (time - self.arrivalTime)
+        burstTimeLeft = self.burstTime - (time - self.startTime)
         burstTimeDone = self.burstTime - burstTimeLeft
         self.burstTime = burstTimeDone
         remainingProcess = Process(self.pid, self.arrivalTime, burstTimeLeft, self.priority)

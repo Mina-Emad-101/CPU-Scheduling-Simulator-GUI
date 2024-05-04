@@ -29,7 +29,7 @@ class GanttChart:
 
     def getNextProcessIdx(self, currentTime: int) -> int:
         idx = -1
-        while idx == -1 and currentTime < len(self.getGanttChartString()):
+        while idx == -1:
             for i, process in enumerate(self.processList):
                 if process.arrivalTime <= currentTime:
                     idx = i
@@ -54,7 +54,6 @@ class GanttChart:
                 and ganttList[-1].priority > self.processList[nextProcessIdx].priority:
 
                 splitProcess = ganttList[-1].split(self.processList[nextProcessIdx].arrivalTime)
-                splitProcess.arrivalTime = 0
                 self.processList.append(splitProcess)
                 self.sortByPriority()
 
